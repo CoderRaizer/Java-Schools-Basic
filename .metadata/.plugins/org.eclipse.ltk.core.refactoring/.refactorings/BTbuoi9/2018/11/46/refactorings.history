@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;vongxoay.gif&apos; to &apos;Test_Z2/src/mypackage&apos;&#x0D;&#x0A;- Original project: &apos;BTbuoi9&apos;&#x0D;&#x0A;- Destination element: &apos;Test_Z2/src/mypackage&apos;&#x0D;&#x0A;- Original element: &apos;vongxoay.gif&apos;" description="Copy file" destination="=Test_Z2/src&lt;mypackage" element1="src/bai3/vongxoay.gif" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1542111965155" units="0" version="1.0"/>
+</session>

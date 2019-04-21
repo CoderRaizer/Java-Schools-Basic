@@ -1,0 +1,226 @@
+package mypackage;
+
+import java.awt.Button;
+import java.awt.EventQueue;
+import java.security.KeyStore.ProtectionParameter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class ManagerUser extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JPanel panel_3;
+
+	private JTable table;
+	private JScrollPane scrollPane;
+	private DefaultTableModel model = new DefaultTableModel();
+
+	private JTextField textFullName;
+	private JTextField textUsername;
+	private JPasswordField textPassword;
+
+	Connection con;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ManagerUser frame = new ManagerUser();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public void loadTableUser() {
+		this.con = new MyConnect().getConnection();
+		if (this.con != null) {
+			try {
+				Object[] row = new Object[6];
+				String sql = "SELECT * FROM USERS";
+				PreparedStatement ps = con.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					for (int i = 0; i < 6; i++) {
+						row[i] = rs.getString(i + 1);
+					}
+					model.addRow(row);
+				}
+				rs.close();
+				ps.close();
+			} catch (SQLException ex) {
+				System.out.println(ex.toString());
+			}
+		}
+	}
+
+	public ManagerUser() {
+
+		/*-----Check Connection-----*/
+		Connection con = null;
+		con = new MyConnect().getConnection();
+		if (con != null) {
+			System.out.println("Connect success");
+		}
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 588, 420);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		panel_1 = new JPanel();
+		panel_1.setBounds(0, 0, 337, 333);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		
+		
+		/*------Crollpane and Table------*/
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 317, 322);
+		panel_1.add(scrollPane);
+
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		String []columns = {"Id","FullName","UserName","PassWord","Status","Role"};
+		model.setColumnIdentifiers(columns);
+		table.setModel(model);
+		table.removeColumn(table.getColumnModel().getColumn(3));
+		/*------Crollpane and Table------*/
+		
+		
+		
+		
+		panel_2 = new JPanel();
+		panel_2.setBounds(0, 339, 337, 42);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+
+		Button btnUpdate = new Button("Update");
+		btnUpdate.setBounds(10, 10, 84, 22);
+		panel_2.add(btnUpdate);
+
+		Button btnDelete = new Button("Delete");
+		btnDelete.setBounds(126, 10, 84, 22);
+		panel_2.add(btnDelete);
+
+		Button btnLock = new Button("Lock");
+		btnLock.setBounds(243, 10, 84, 22);
+		panel_2.add(btnLock);
+
+		panel_3 = new JPanel();
+		panel_3.setBounds(337, 0, 235, 381);
+		contentPane.add(panel_3);
+		panel_3.setLayout(null);
+
+		JLabel lblManagerUser = new JLabel("MANAGER USER");
+		lblManagerUser.setBounds(74, 11, 109, 41);
+		panel_3.add(lblManagerUser);
+
+		JLabel lblFullName = new JLabel("Full Name");
+		lblFullName.setBounds(10, 110, 64, 17);
+		panel_3.add(lblFullName);
+
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setBounds(10, 154, 64, 17);
+		panel_3.add(lblUsername);
+
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(10, 196, 64, 17);
+		panel_3.add(lblPassword);
+
+		textFullName = new JTextField();
+		textFullName.setBounds(74, 108, 159, 20);
+		panel_3.add(textFullName);
+		textFullName.setColumns(10);
+
+		textUsername = new JTextField();
+		textUsername.setBounds(74, 152, 159, 20);
+		panel_3.add(textUsername);
+		textUsername.setColumns(10);
+
+		textPassword = new JPasswordField();
+		textPassword.setBounds(74, 194, 159, 20);
+		panel_3.add(textPassword);
+
+		JButton btnCreate = new JButton("CREATE");
+		btnCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String sql = "INSERT INTO USERS VALUES (?,?,?,0,?,?)";//mac dinh lock bang 0
+					PreparedStatement ps = con.prepareStatement(sql);
+					ResultSet rs = ps.executeQuery();
+				}catch(SQLException ex) {
+					System.out.println(ex.toString());
+				}
+			}
+		});
+		btnCreate.setBounds(144, 225, 89, 41);
+		panel_3.add(btnCreate);
+
+		JButton btnReset = new JButton("RESET");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				textFullName.setText("");
+				textUsername.setText("");
+				textPassword.setText("");
+			}
+		});
+		btnReset.setBounds(144, 277, 89, 41);
+		panel_3.add(btnReset);
+
+		JButton btnClose = new JButton("CLOSE");
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnClose.setBounds(144, 329, 89, 41);
+		panel_3.add(btnClose);
+
+		JRadioButton rdbtnAdmin = new JRadioButton("Admin");
+		rdbtnAdmin.setBounds(20, 234, 109, 23);
+		panel_3.add(rdbtnAdmin);
+
+		JRadioButton rdbtnStaff = new JRadioButton("Staff");
+		rdbtnStaff.setBounds(20, 286, 109, 23);
+		panel_3.add(rdbtnStaff);
+
+		JRadioButton rdbtnCustomers = new JRadioButton("Customers");
+		rdbtnCustomers.setBounds(20, 338, 109, 23);
+		panel_3.add(rdbtnCustomers);
+
+		ButtonGroup btnGroup = new ButtonGroup();
+		btnGroup.add(rdbtnAdmin);
+		btnGroup.add(rdbtnStaff);
+		btnGroup.add(rdbtnCustomers);
+		
+		loadTableUser();
+	}
+}

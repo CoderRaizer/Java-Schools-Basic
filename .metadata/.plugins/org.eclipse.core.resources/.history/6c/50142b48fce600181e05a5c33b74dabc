@@ -1,0 +1,117 @@
+package mypackage;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.sql.Connection;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import java.awt.Button;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+
+public class ManagerUser extends JFrame {
+
+	private JPanel contentPane;
+	private JPanel panel_1;
+	private JTable table;
+	private JTextField textFullName;
+	private JTextField textUsername;
+	private JPasswordField textPassword;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ManagerUser frame = new ManagerUser();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public ManagerUser() {
+		
+		
+		Connection con = null;
+		con = new MyConnect().getConnection();
+		if(con != null) {
+			System.out.println("Connect success");
+		}
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 588, 420);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(0, 0, 319, 333);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 299, 322);
+		panel_1.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(0, 339, 319, 42);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		Button btnUpdate = new Button("Update");
+		btnUpdate.setBounds(10, 10, 84, 22);
+		panel_2.add(btnUpdate);
+		
+		Button btnDelete = new Button("Delete");
+		btnDelete.setBounds(116, 10, 84, 22);
+		panel_2.add(btnDelete);
+		
+		Button btnLock = new Button("Lock");
+		btnLock.setBounds(225, 10, 84, 22);
+		panel_2.add(btnLock);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(329, 0, 243, 381);
+		contentPane.add(panel_3);
+		panel_3.setLayout(null);
+		
+		textFullName = new JTextField();
+		textFullName.setBounds(74, 12, 159, 20);
+		panel_3.add(textFullName);
+		textFullName.setColumns(10);
+		
+		textUsername = new JTextField();
+		textUsername.setBounds(74, 59, 159, 20);
+		panel_3.add(textUsername);
+		textUsername.setColumns(10);
+		
+		textPassword = new JPasswordField();
+		textPassword.setBounds(74, 105, 159, 20);
+		panel_3.add(textPassword);
+		
+		JLabel lblFullName = new JLabel("Full Name");
+		lblFullName.setBounds(9, 14, 55, 17);
+		panel_3.add(lblFullName);
+		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setBounds(10, 62, 54, 17);
+		panel_3.add(lblUsername);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(9, 108, 55, 17);
+		panel_3.add(lblPassword);
+	}
+}

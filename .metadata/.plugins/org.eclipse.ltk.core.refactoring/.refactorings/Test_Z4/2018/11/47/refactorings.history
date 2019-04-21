@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;mypackage&apos; to &apos;setupsql&apos;&#x0D;&#x0A;- Original project: &apos;Test_Z4&apos;&#x0D;&#x0A;- Original element: &apos;Test_Z4/src/mypackage&apos;&#x0D;&#x0A;- Renamed element: &apos;Test_Z4/src/setupsql&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;mypackage&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;mypackage" name="setupsql" qualified="false" references="true" stamp="1542899935111" textual="false" version="1.0"/>
+</session>
